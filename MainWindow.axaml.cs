@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace WeatherDashboard;
+namespace WeatherDashboard.Views;
 
 public partial class MainWindow : Window
 {
