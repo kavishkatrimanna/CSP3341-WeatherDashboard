@@ -46,8 +46,9 @@ public class WeatherApiService : IWeatherApiService
 
             Console.WriteLine(
                 $"[WeatherApiService] Received {xml.Length} characters of XML.");
+                
 
-            var forecasts = ParseBomXml(xml);
+            var forecasts = ParseBomXml(xml, GetExpectedAreaName(bomProductId));
 
             Console.WriteLine(
                 $"[WeatherApiService] Valid daily forecasts: {forecasts.Count}");
@@ -99,13 +100,25 @@ public class WeatherApiService : IWeatherApiService
 
         return GenerateSampleForecast();
     }
-
+    private static string GetExpectedAreaName(string bomProductId)
+    {
+        return bomProductId switch
+        {
+            "IDW14199" => "Perth",
+            "IDN11060" => "Sydney",
+            _ => throw new ArgumentException(
+                $"Unsupported BOM product ID: {bomProductId}",
+                nameof(bomProductId))
+        };
+    }
     /// <summary>
     /// Parses the BOM XML and combines valid forecast periods into daily records.
     /// This implementation currently targets the Perth forecast area.
     /// Humidity is unavailable in the selected daily forecast periods.
     /// </summary>
-    private static List<ForecastDay> ParseBomXml(string xml)
+    private static List<ForecastDay> ParseBomXml(
+    string xml,
+    string expectedAreaName)
     {
         var result = new List<ForecastDay>();
 
@@ -119,13 +132,13 @@ public class WeatherApiService : IWeatherApiService
         var area = areas.FirstOrDefault(a =>
             string.Equals(
                 ((string?)a.Attribute("description"))?.Trim(),
-                "Perth",
+                expectedAreaName,
                 StringComparison.OrdinalIgnoreCase));
 
         if (area is null)
-        {
+         {
             Console.Error.WriteLine(
-                "[WeatherApiService] Could not find an area named Perth.");
+                $"[WeatherApiService] Could not find an area named {expectedAreaName}.");
 
             return result;
         }
