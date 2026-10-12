@@ -9,12 +9,6 @@ namespace WeatherDashboard.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    public ObservableCollection<string> TestLocations { get; } =
-    new()
-    {
-        "Perth",
-        "Sydney"
-    };
     private readonly IWeatherApiService _weatherApi;
     private readonly IWeatherRepository _repository;
 

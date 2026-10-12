@@ -36,11 +36,12 @@
                            VerticalAlignment="Center"
                            FontSize="13"/>
 
-                <ComboBox   Grid.Column="1"
-                            Width="200"
+                <ComboBox   Width="200"
                             Height="36"
-                            ItemsSource="{Binding TestLocations}"
-                            SelectedIndex="0"/>
+                            ItemsSource="{Binding Locations}"
+                            SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"
+                            DisplayMemberBinding="{Binding Name}"
+                            PlaceholderText="Select location"/>
 
             </StackPanel>
 
