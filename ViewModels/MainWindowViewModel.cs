@@ -164,7 +164,7 @@ public partial class MainWindowViewModel : ObservableObject
 
                 Console.WriteLine(
                     $"[MainWindowViewModel] API returned {forecast.Count} forecasts.");
-
+                    
                 await _repository.SaveForecastAsync(location, forecast);
 
                 // The selection might have changed during the database save.

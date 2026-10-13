@@ -132,7 +132,9 @@ public class WeatherRepository : IWeatherRepository
                 VALUES ($loc, $date, $min, $max, $hum, $rain, $prob)
                 """;
             cmd.Parameters.AddWithValue("$loc", location.LocationId);
-            cmd.Parameters.AddWithValue("$date", day.ForecastDate.ToString("O"));
+            cmd.Parameters.AddWithValue(
+                "$date",
+                day.ForecastDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture));
             cmd.Parameters.AddWithValue("$min", ToSqliteValue(day.MinTemp));
             cmd.Parameters.AddWithValue("$max", ToSqliteValue(day.MaxTemp));
             cmd.Parameters.AddWithValue("$hum", ToSqliteValue(day.Humidity));

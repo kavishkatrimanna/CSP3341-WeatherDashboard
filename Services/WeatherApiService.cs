@@ -98,7 +98,8 @@ public class WeatherApiService : IWeatherApiService
                 $"[WeatherApiService] Unexpected error: {ex.Message}");
         }
 
-        return GenerateSampleForecast();
+        throw new HttpRequestException(
+            $"Unable to retrieve a valid forecast from BOM for product {bomProductId}.");
     }
     private static string GetExpectedAreaName(string bomProductId)
     {
